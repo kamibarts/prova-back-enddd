@@ -1,0 +1,91 @@
+DROP DATABASE IF EXISTS vitoriakar;
+CREATE DATABASE IF NOT EXISTS vitoriakar;
+USE vitoriakar;
+
+CREATE TABLE clientes(
+    cliente_id int(10) NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    nome varchar(255) NOT NULL,
+    cpf varchar(11) NOT NULL UNIQUE,
+    email varchar(255) NOT NULL UNIQUE,
+    endereco varchar(255) NOT NULL,
+    data_nascimento date NOT NULL,
+    data_cadastro date NOT NULL   
+);
+
+CREATE TABLE professor(
+    professor_id int(10) NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    nome varchar(255) NOT NULL,
+    cpf varchar(11) NOT NULL UNIQUE,
+    email varchar(255) NOT NULL UNIQUE,
+    endereco varchar(255) NOT NULL,
+    data_nascimento date NOT NULL,
+    data_cadastro date NOT NULL   
+);
+
+CREATE TABLE telefone (
+    telefone_id int(10) NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    cliente_id int(10),
+    professor_id int(10),
+    numero varchar(20) NOT NULL,
+    tipo enum('residencial', 'comercial', 'celular') NOT NULL,
+    FOREIGN KEY (cliente_id) REFERENCES clientes(cliente_id),
+    FOREIGN KEY (professor_id) REFERENCES professor(professor_id)
+);
+
+CREATE TABLE veiculos (
+    veiculos_id int(10) NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    marca_veiculo VARCHAR(252) NOT NULL,
+    modelo_veiculo VARCHAR(252) NOT NULL,
+    ano_veiculo date NOT NULL,
+    fabricacao_veiculo date NOT NULL,
+    cliente_id int(10) NOT NULL,
+    FOREIGN KEY (cliente_id) REFERENCES clientes(cliente_id)
+);
+
+INSERT INTO clientes (nome, cpf, email, endereco, data_nascimento, data_cadastro) VALUES
+('Carlos Silva', '12345678901', 'carlos.silva@email.com', 'Rua A, 123', '1990-01-15', '2024-01-01'),
+('Ana Souza', '23456789012', 'ana.souza@email.com', 'Rua B, 456', '1985-04-10', '2024-01-02'),
+('Mariana Oliveira', '34567890123', 'mariana.oliveira@email.com', 'Rua C, 789', '1995-07-22', '2024-01-03'),
+('Pedro Lima', '45678901234', 'pedro.lima@email.com', 'Rua D, 101', '1988-11-05', '2024-01-04'),
+('Julia Costa', '56789012345', 'julia.costa@email.com', 'Rua E, 202', '1992-02-28', '2024-01-05'),
+('Ricardo Pereira', '67890123456', 'ricardo.pereira@email.com', 'Rua F, 303', '1980-06-13', '2024-01-06'),
+('Fernanda Martins', '78901234567', 'fernanda.martins@email.com', 'Rua G, 404', '1993-03-19', '2024-01-07'),
+('Roberto Santos', '89012345678', 'roberto.santos@email.com', 'Rua H, 505', '1998-10-30', '2024-01-08'),
+('Paula Ferreira', '90123456789', 'paula.ferreira@email.com', 'Rua I, 606', '1991-05-15', '2024-01-09'),
+('Lucas Rocha', '01234567890', 'lucas.rocha@email.com', 'Rua J, 707', '1986-09-25', '2024-01-10');
+
+INSERT INTO professor (nome, cpf, email, endereco, data_nascimento, data_cadastro) VALUES
+('José Almeida', '23456789012', 'jose.almeida@educa.com', 'Av. Principal, 123', '1980-03-15', '2024-01-01'),
+('Cláudia Mendes', '34567890123', 'claudia.mendes@educa.com', 'Av. Secundária, 456', '1985-11-20', '2024-01-02'),
+('Fernanda Silva', '45678901234', 'fernanda.silva@educa.com', 'Av. Central, 789', '1990-06-10', '2024-01-03'),
+('Carlos Martins', '56789012345', 'carlos.martins@educa.com', 'Av. Santos, 101', '1987-07-25', '2024-01-04'),
+('Roberta Costa', '67890123456', 'roberta.costa@educa.com', 'Av. Norte, 202', '1992-02-05', '2024-01-05'),
+('Marcos Souza', '78901234567', 'marcos.souza@educa.com', 'Av. Sul, 303', '1982-10-19', '2024-01-06'),
+('Patrícia Lima', '89012345678', 'patricia.lima@educa.com', 'Av. Oeste, 404', '1988-05-18', '2024-01-07'),
+('Rogério Almeida', '90123456789', 'rogerio.almeida@educa.com', 'Av. Leste, 505', '1994-08-12', '2024-01-08'),
+('Sônia Rocha', '01234567890', 'sonia.rocha@educa.com', 'Av. Verde, 606', '1991-01-30', '2024-01-09'),
+('Gustavo Martins', '12345678901', 'gustavo.martins@educa.com', 'Av. Azul, 707', '1983-12-13', '2024-01-10');
+
+INSERT INTO telefone (cliente_id, professor_id, numero, tipo) VALUES
+(1, NULL, '999990000', 'celular'),
+(2, NULL, '999991111', 'residencial'),
+(3, NULL, '999992222', 'comercial'),
+(4, NULL, '999993333', 'celular'),
+(5, NULL, '999994444', 'residencial'),
+(6, NULL, '999995555', 'comercial'),
+(7, NULL, '999996666', 'celular'),
+(8, NULL, '999997777', 'residencial'),
+(9, NULL, '999998888', 'comercial'),
+(10, NULL, '999999999', 'celular');
+
+INSERT INTO veiculos (marca_veiculo, modelo_veiculo, ano_veiculo, fabricacao_veiculo, cliente_id) VALUES
+('Volkswagen', 'Gol', '2018-01-01', '2017-12-10', 1),
+('Fiat', 'Uno', '2020-05-15', '2020-05-10', 2),
+('Chevrolet', 'Celta', '2022-07-20', '2022-07-15', 3),
+('Honda', 'Civic', '2019-11-05', '2019-10-25', 4),
+('Toyota', 'Corolla', '2021-03-12', '2021-03-01', 5),
+('Ford', 'Fusion', '2017-09-10', '2017-08-20', 6),
+('Renault', 'Sandero', '2023-01-25', '2023-01-15', 7),
+('Hyundai', 'HB20', '2022-06-30', '2022-06-10', 8),
+('Nissan', 'Kicks', '2020-02-22', '2020-02-10', 9),
+('BMW', 'X1', '2021-10-01', '2021-09-15', 10);
